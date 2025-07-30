@@ -8,7 +8,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors()); // Enable CORS for API requests
+app.use(cors({
+  origin: process.env.VERCEL_URL || 'https://luminary-stream-frontend.vercel.app',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
@@ -25,7 +29,7 @@ app.use(express.static(path.join(__dirname, '../public'), {
 // Routes
 app.use('/api/stations', stationsRouter);
 
-// Serve HTML files
+// Serve HTML files (optional for backend-only deployment)
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
@@ -40,7 +44,7 @@ app.get('/radio', (req, res) => {
 
 // Handle 404 for undefined routes
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, '../public/404.html')); // Create a 404.html if needed
+  res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
 });
 
 // Error handling middleware
