@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors({
-  origin: process.env.VERCEL_URL || 'https://streaming-app-ruddy.vercel.app',
+  origin: process.env.VERCEL_URL || 'https://streaming-app-livid.vercel.app/',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 }));
